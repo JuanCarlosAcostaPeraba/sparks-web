@@ -1,0 +1,185 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const commands = [
+	['sparks + "Idea"', 'Capture a spark quickly with the short alias.'],
+	['sparks add --parent 1 "Sub-idea"', 'Attach a nested thought to a parent idea.'],
+	['sparks tree', 'See a numbered tree of related ideas.'],
+	['sparks ! 3', 'Toggle important status.'],
+	['sparks ok 3', 'Mark a spark as completed.'],
+	['sparks search "docs"', 'Find sparks by title.'],
+];
+
+const features = [
+	{
+		title: 'Capture before the thought disappears.',
+		text: 'One command is enough to save a task, note, or half-formed idea while you stay in flow.',
+	},
+	{
+		title: 'Keep related ideas connected.',
+		text: 'Use --parent to create sub-ideas and view them with hierarchical numbering.',
+	},
+	{
+		title: 'Local, native, scriptable.',
+		text: 'A Go binary backed by local SQLite, with JSON output when you want to pipe or automate.',
+	},
+];
+---
+
+<Layout>
+	<header class="sticky top-0 z-20 border-b border-line/80 bg-paper/90 backdrop-blur-xl">
+		<nav class="mx-auto flex h-18 w-full max-w-6xl items-center justify-between px-5" aria-label="Primary">
+			<a class="flex items-center gap-3 font-black text-xl tracking-tight" href="#">
+				<span class="grid h-8 w-8 place-items-center bg-ink font-mono text-spark">✦</span>
+				<span>sparks</span>
+			</a>
+			<div class="hidden items-center gap-8 text-sm font-bold text-stone-600 md:flex">
+				<a class="hover:text-ink" href="#why">Why</a>
+				<a class="hover:text-ink" href="#commands">Commands</a>
+				<a class="hover:text-ink" href="#install">Install</a>
+				<a class="hover:text-ink" href="https://github.com/JuanCarlosAcostaPeraba/sparks-cli">GitHub</a>
+			</div>
+		</nav>
+	</header>
+
+	<main>
+		<section class="mx-auto grid min-h-[calc(100svh-72px)] w-full max-w-6xl grid-cols-1 items-center gap-12 px-5 py-16 md:grid-cols-[0.92fr_1.08fr] md:py-24">
+			<div class="w-full max-w-[320px] min-w-0 sm:max-w-none">
+				<h1 class="max-w-2xl text-7xl font-black leading-[0.88] tracking-tight text-ink sm:text-8xl lg:text-[7rem]">
+					sparks
+				</h1>
+				<p class="mt-7 max-w-[320px] break-words text-xl leading-8 text-stone-700 sm:max-w-2xl sm:text-2xl">
+					A tiny native CLI for capturing ideas, tasks, and nested thoughts without leaving the terminal.
+				</p>
+				<div class="mt-9 flex flex-wrap gap-3">
+					<a
+						class="inline-flex h-11 items-center justify-center rounded-lg border border-ink bg-ink px-5 text-sm font-black text-panel"
+						href="https://github.com/JuanCarlosAcostaPeraba/sparks-cli/releases/tag/v0.1.0"
+					>
+						Download v0.1.0
+					</a>
+					<a
+						class="inline-flex h-11 items-center justify-center rounded-lg border border-ink px-5 text-sm font-black text-ink"
+						href="https://github.com/JuanCarlosAcostaPeraba/sparks-cli"
+					>
+						View on GitHub
+					</a>
+				</div>
+				<div class="mt-4 w-full max-w-[320px] overflow-hidden break-all rounded-lg border border-line bg-panel px-4 py-3 font-mono text-xs text-stone-800 sm:max-w-full sm:text-sm">
+					curl -L .../sparks_0.1.0_darwin_arm64.tar.gz
+				</div>
+			</div>
+
+			<div class="w-full max-w-[320px] min-w-0 overflow-hidden rounded-lg border border-neutral-800 bg-neutral-950 shadow-[0_28px_90px_rgba(32,25,12,0.18)] sm:max-w-none">
+				<div class="flex h-10 items-center gap-2 border-b border-neutral-800 bg-neutral-900 px-4">
+					<span class="h-3 w-3 rounded-full bg-red-400"></span>
+					<span class="h-3 w-3 rounded-full bg-amber-400"></span>
+					<span class="h-3 w-3 rounded-full bg-green-400"></span>
+				</div>
+				<pre class="whitespace-pre-wrap break-words p-5 font-mono text-[11px] leading-6 text-stone-100 sm:overflow-x-auto sm:whitespace-pre sm:p-7 sm:text-sm"><span class="text-spark">$</span> sparks add "Ship the CLI"
+Added spark 1
+<span class="text-spark">$</span> sparks add --parent 1 "Write docs"
+Added spark 2
+<span class="text-spark">$</span> sparks tree
+└─ □ 1) Ship the CLI
+   └─ □ 1.1) Write docs
+
+<span class="text-stone-500"># fast capture, local SQLite, JSON when needed</span></pre>
+			</div>
+		</section>
+
+		<section id="why" class="border-t border-line py-24">
+			<div class="mx-auto w-full max-w-6xl px-5">
+				<div class="grid gap-10 md:grid-cols-[0.95fr_1.05fr] md:items-end">
+					<h2 class="max-w-xl text-5xl font-black leading-none tracking-tight text-ink md:text-6xl">
+						Built for terminal-first thinking.
+					</h2>
+					<p class="max-w-xl break-words text-lg leading-8 text-stone-600">
+						sparks keeps capture close to where work already happens. No dashboard, no sync account, no context switch.
+					</p>
+				</div>
+				<div class="mt-12 grid overflow-hidden rounded-lg border border-line bg-panel md:grid-cols-3">
+					{
+						features.map((feature) => (
+							<article class="border-b border-line p-7 last:border-b-0 md:border-r md:border-b-0 md:last:border-r-0">
+								<h3 class="text-2xl font-black leading-tight text-ink">{feature.title}</h3>
+								<p class="mt-4 break-words leading-7 text-stone-600">{feature.text}</p>
+							</article>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<section id="commands" class="border-t border-line py-24">
+			<div class="mx-auto grid w-full max-w-6xl gap-10 px-5 md:grid-cols-[0.9fr_1.1fr]">
+				<div>
+					<h2 class="max-w-xl text-5xl font-black leading-none tracking-tight text-ink md:text-6xl">
+						Small command surface. Useful defaults.
+					</h2>
+					<p class="mt-7 max-w-xl text-lg leading-8 text-stone-600">
+						The default command lists active sparks. Aliases keep common actions short when you are already in flow.
+					</p>
+				</div>
+				<div>
+					{
+						commands.map(([command, description]) => (
+							<div class="grid gap-2 border-b border-line py-4 sm:grid-cols-[220px_1fr] sm:gap-6">
+								<code class="font-mono text-sm font-black text-ember">{command}</code>
+								<span class="text-stone-600">{description}</span>
+							</div>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<section id="install" class="border-t border-line py-24">
+			<div class="mx-auto w-full max-w-6xl px-5">
+				<div class="grid gap-10 md:grid-cols-[0.95fr_1.05fr] md:items-end">
+					<h2 class="max-w-xl text-5xl font-black leading-none tracking-tight text-ink md:text-6xl">
+						Install manually today.
+					</h2>
+					<p class="max-w-xl text-lg leading-8 text-stone-600">
+						Homebrew/core submission is planned when the project meets upstream notability requirements. Until then, use the release archive for your platform.
+					</p>
+				</div>
+				<div class="mt-12 grid gap-5 md:grid-cols-2">
+					<article class="rounded-lg border border-line bg-panel p-7">
+						<h3 class="text-2xl font-black text-ink">Apple Silicon macOS</h3>
+						<p class="mt-3 text-stone-600">Download, extract, and place the binary somewhere on your PATH.</p>
+						<pre class="mt-5 overflow-x-auto rounded-lg bg-neutral-950 p-5 font-mono text-xs leading-6 text-stone-100">curl -L -o sparks.tar.gz https://github.com/JuanCarlosAcostaPeraba/sparks-cli/releases/download/v0.1.0/sparks_0.1.0_darwin_arm64.tar.gz
+tar -xzf sparks.tar.gz
+mkdir -p ~/.local/bin
+mv sparks ~/.local/bin/sparks</pre>
+					</article>
+					<article class="rounded-lg border border-line bg-panel p-7">
+						<h3 class="text-2xl font-black text-ink">Intel macOS</h3>
+						<p class="mt-3 text-stone-600">Use the same install flow with the amd64 archive.</p>
+						<pre class="mt-5 overflow-x-auto rounded-lg bg-neutral-950 p-5 font-mono text-xs leading-6 text-stone-100">curl -L -o sparks.tar.gz https://github.com/JuanCarlosAcostaPeraba/sparks-cli/releases/download/v0.1.0/sparks_0.1.0_darwin_amd64.tar.gz
+tar -xzf sparks.tar.gz
+mkdir -p ~/.local/bin
+mv sparks ~/.local/bin/sparks</pre>
+					</article>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer class="bg-ink py-20 text-panel">
+		<div class="mx-auto flex w-full max-w-6xl flex-col gap-8 px-5 md:flex-row md:items-center md:justify-between">
+			<div>
+				<h2 class="max-w-3xl text-5xl font-black leading-none tracking-tight">Give your terminal a scratchpad.</h2>
+				<p class="mt-5 max-w-2xl text-lg leading-8 text-stone-300">
+					sparks is early. Try it, open issues, and help shape a tiny tool for fast capture.
+				</p>
+			</div>
+			<a
+				class="inline-flex h-11 shrink-0 items-center justify-center rounded-lg border border-panel bg-panel px-5 text-sm font-black text-ink"
+				href="https://github.com/JuanCarlosAcostaPeraba/sparks-cli"
+			>
+				Star on GitHub
+			</a>
+		</div>
+	</footer>
+</Layout>

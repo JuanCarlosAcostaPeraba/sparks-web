@@ -1,0 +1,31 @@
+---
+import '../styles/global.css';
+
+const {
+	title = 'sparks - capture ideas without leaving the terminal',
+	description = 'sparks is a tiny native CLI for capturing ideas, tasks, and nested thoughts from the terminal.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="description" content={description} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content="/og.svg" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content="/og.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="bg-stone-50 text-stone-950 antialiased">
+		<slot />
+	</body>
+</html>
