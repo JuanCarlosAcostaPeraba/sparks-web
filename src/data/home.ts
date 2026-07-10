@@ -45,7 +45,7 @@ export const terminalLines = [
   "└─ □ 1) Ship the CLI",
   "   └─ □ 1.1) Write docs",
   "",
-  '<span class="text-stone-500"># fast capture, local SQLite, JSON when needed</span>',
+  '<span class="text-stone-400"># fast capture, local SQLite, JSON when needed</span>',
 ] as const;
 
 export const whyIntro: SectionIntro = {

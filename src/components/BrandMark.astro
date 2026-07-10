@@ -3,7 +3,7 @@ interface Props {
   href?: string;
 }
 
-const { href = "#" } = Astro.props;
+const { href = "/" } = Astro.props;
 ---
 
 <a class="flex items-center gap-3 font-black text-xl tracking-tight" href={href}>
