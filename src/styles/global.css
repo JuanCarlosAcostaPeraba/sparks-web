@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
 	--font-sans:
 		Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -12,10 +14,23 @@
 	--color-line: #d8d3c7;
 	--color-ember: #d9822b;
 	--color-spark: #64d67a;
+	--color-muted: #57534e;
 }
 
 html {
 	scroll-behavior: smooth;
+	color-scheme: light;
+}
+
+html.dark {
+	color-scheme: dark;
+	--color-ink: #f5f5f4;
+	--color-paper: #11100e;
+	--color-panel: #1c1a17;
+	--color-line: #44403c;
+	--color-ember: #f2a65a;
+	--color-spark: #76e38b;
+	--color-muted: #b8b3ab;
 }
 
 body {
@@ -28,6 +43,6 @@ body {
 }
 
 ::selection {
-	background: #15130f;
-	color: #fffdf8;
+	background: var(--color-ink);
+	color: var(--color-panel);
 }
