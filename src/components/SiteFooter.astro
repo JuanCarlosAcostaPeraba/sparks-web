@@ -1,0 +1,30 @@
+---
+import type { FooterContent } from "../types/site";
+
+interface Props {
+  content: FooterContent;
+}
+
+const { content } = Astro.props;
+---
+
+<footer class="bg-ink py-20 text-panel">
+  <div
+    class="mx-auto flex w-full max-w-6xl flex-col gap-8 px-5 md:flex-row md:items-center md:justify-between"
+  >
+    <div>
+      <h2 class="max-w-3xl text-5xl font-black leading-none tracking-tight">
+        {content.title}
+      </h2>
+      <p class="mt-5 max-w-2xl text-lg leading-8 text-stone-300">
+        {content.description}
+      </p>
+    </div>
+    <a
+      class="inline-flex h-11 shrink-0 items-center justify-center rounded-lg border border-panel bg-panel px-5 text-sm font-black text-ink"
+      href={content.action.href}
+    >
+      {content.action.label}
+    </a>
+  </div>
+</footer>

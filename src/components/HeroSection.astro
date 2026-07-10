@@ -1,0 +1,49 @@
+---
+import TerminalDemo from "./TerminalDemo.astro";
+import type { HeroContent } from "../types/site";
+
+interface Props {
+  content: HeroContent;
+  terminalLines: readonly string[];
+}
+
+const { content, terminalLines } = Astro.props;
+---
+
+<section
+  class="mx-auto grid min-h-[calc(100svh-72px)] w-full max-w-6xl grid-cols-1 items-center gap-12 px-5 py-16 md:grid-cols-[0.92fr_1.08fr] md:py-24"
+>
+  <div class="w-full max-w-[320px] min-w-0 sm:max-w-none">
+    <h1
+      class="max-w-2xl text-7xl font-black leading-[0.88] tracking-tight text-ink sm:text-8xl lg:text-[7rem]"
+    >
+      {content.title}
+    </h1>
+    <p
+      class="mt-7 max-w-[320px] wrap-break-word text-xl leading-8 text-muted sm:max-w-2xl sm:text-2xl"
+    >
+      {content.description}
+    </p>
+    <div class="mt-9 flex flex-wrap gap-3">
+      <a
+        class="inline-flex h-11 items-center justify-center rounded-lg border border-ink bg-ink px-5 text-sm font-black text-panel"
+        href={content.primaryAction.href}
+      >
+        {content.primaryAction.label}
+      </a>
+      <a
+        class="inline-flex h-11 items-center justify-center rounded-lg border border-ink px-5 text-sm font-black text-ink"
+        href={content.secondaryAction.href}
+      >
+        {content.secondaryAction.label}
+      </a>
+    </div>
+    <div
+      class="mt-4 w-full max-w-[320px] overflow-hidden break-all rounded-lg border border-line bg-panel px-4 py-3 font-mono text-xs text-muted sm:max-w-full sm:text-sm"
+    >
+      {content.installHint}
+    </div>
+  </div>
+
+  <TerminalDemo lines={terminalLines} />
+</section>
