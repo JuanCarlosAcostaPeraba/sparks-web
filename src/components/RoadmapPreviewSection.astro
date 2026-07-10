@@ -1,0 +1,27 @@
+---
+import RoadmapVisual from "./RoadmapVisual.astro";
+import SectionIntro from "./SectionIntro.astro";
+import type { RoadmapStep, SectionIntro as SectionIntroType } from "../types/site";
+
+interface Props {
+  intro: SectionIntroType;
+  steps: readonly RoadmapStep[];
+}
+
+const { intro, steps } = Astro.props;
+---
+
+<section id="roadmap" class="border-t border-line py-24">
+  <div class="mx-auto w-full max-w-6xl px-5">
+    <SectionIntro intro={intro} />
+    <div class="mt-12">
+      <RoadmapVisual steps={steps} />
+    </div>
+    <a
+      class="mt-8 inline-flex h-11 items-center justify-center rounded-lg border border-ink bg-ink px-5 text-sm font-black text-panel"
+      href="/roadmap"
+    >
+      View full roadmap
+    </a>
+  </div>
+</section>

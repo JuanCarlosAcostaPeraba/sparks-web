@@ -3,6 +3,7 @@ import CommandsSection from "../components/CommandsSection.astro";
 import FeatureSection from "../components/FeatureSection.astro";
 import HeroSection from "../components/HeroSection.astro";
 import InstallSection from "../components/InstallSection.astro";
+import RoadmapPreviewSection from "../components/RoadmapPreviewSection.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import Layout from "../layouts/Layout.astro";
@@ -15,6 +16,8 @@ import {
   installIntro,
   installOptions,
   navItems,
+  roadmapIntro,
+  roadmapSteps,
   terminalLines,
   whyIntro,
 } from "../data/home";
@@ -26,6 +29,7 @@ import {
     <HeroSection content={heroContent} terminalLines={terminalLines} />
     <FeatureSection intro={whyIntro} features={features} />
     <CommandsSection intro={commandsIntro} commands={commands} />
+    <RoadmapPreviewSection intro={roadmapIntro} steps={roadmapSteps} />
     <InstallSection intro={installIntro} options={installOptions} />
   </main>
   <SiteFooter content={footerContent} />

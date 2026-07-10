@@ -18,6 +18,19 @@ export type Feature = {
   text: string;
 };
 
+export type RoadmapStep = {
+  phase: string;
+  title: string;
+  description: string;
+  status: "now" | "next" | "later";
+  accent: "spark" | "ember" | "ink";
+};
+
+export type RoadmapDetail = RoadmapStep & {
+  summary: string;
+  outcomes: readonly string[];
+};
+
 export type InstallOption = {
   title: string;
   description: string;
@@ -41,4 +54,10 @@ export type FooterContent = {
   title: string;
   description: string;
   action: Link;
+};
+
+export type RoadmapPageContent = {
+  hero: SectionIntro;
+  overview: string;
+  items: readonly RoadmapDetail[];
 };

@@ -5,6 +5,7 @@ import type {
   HeroContent,
   InstallOption,
   NavItem,
+  RoadmapStep,
   SectionIntro,
 } from "../types/site";
 
@@ -15,6 +16,7 @@ const downloadBaseUrl = `${githubUrl}/releases/download/v0.1.0`;
 export const navItems: readonly NavItem[] = [
   { label: "Why", href: "#why" },
   { label: "Commands", href: "#commands" },
+  { label: "Roadmap", href: "#roadmap" },
   { label: "Install", href: "#install" },
   { label: "GitHub", href: githubUrl },
 ];
@@ -68,7 +70,7 @@ export const features: readonly Feature[] = [
 ];
 
 export const commandsIntro: SectionIntro = {
-  title: "Small command surface. Useful defaults.",
+  title: "Small command surface. Useful defaults",
   description:
     "The default command lists active sparks. Aliases keep common actions short when you are already in flow.",
 };
@@ -100,8 +102,41 @@ export const commands: readonly CommandExample[] = [
   },
 ];
 
+export const roadmapIntro: SectionIntro = {
+  title: "A small tool with a clear path",
+  description:
+    "The roadmap keeps sparks focused: better capture first, richer organization next, and careful integrations only when the local workflow stays fast.",
+};
+
+export const roadmapSteps: readonly RoadmapStep[] = [
+  {
+    phase: "01",
+    title: "Make capture frictionless",
+    description:
+      "Keep the CLI tiny, fast, and forgiving for adding, finding, and finishing sparks.",
+    status: "now",
+    accent: "spark",
+  },
+  {
+    phase: "02",
+    title: "Make connected ideas visible",
+    description:
+      "Improve tree views, filtering, and review flows so nested work stays readable.",
+    status: "next",
+    accent: "ember",
+  },
+  {
+    phase: "03",
+    title: "Make local data useful elsewhere",
+    description:
+      "Add export and automation hooks without turning sparks into another cloud dashboard.",
+    status: "later",
+    accent: "ink",
+  },
+];
+
 export const installIntro: SectionIntro = {
-  title: "Install manually today.",
+  title: "Install manually today",
   description:
     "Homebrew/core submission is planned when the project meets upstream notability requirements. Until then, use the release archive for your platform.",
 };
@@ -131,7 +166,7 @@ export const installOptions: readonly InstallOption[] = [
 ];
 
 export const footerContent: FooterContent = {
-  title: "Give your terminal a scratchpad.",
+  title: "Give your terminal a scratchpad",
   description:
     "sparks is early. Try it, open issues, and help shape a tiny tool for fast capture.",
   action: {
