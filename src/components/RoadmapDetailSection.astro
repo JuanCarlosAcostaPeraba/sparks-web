@@ -1,0 +1,63 @@
+---
+import type { RoadmapDetail } from "../types/site";
+
+interface Props {
+  items: readonly RoadmapDetail[];
+}
+
+const { items } = Astro.props;
+
+const accentClasses = {
+  spark: "bg-[#64d67a]",
+  ember: "bg-ember",
+  ink: "bg-ink",
+} as const;
+
+const statusLabels = {
+  now: "Now",
+  next: "Next",
+  later: "Later",
+} as const;
+---
+
+<section class="border-t border-line py-20">
+  <div class="mx-auto grid w-full max-w-6xl gap-6 px-5">
+    {
+      items.map((item) => (
+        <article class="grid gap-6 rounded-lg border border-line bg-panel p-6 md:grid-cols-[180px_1fr] md:p-8">
+          <div>
+            <span class="font-mono text-sm font-black text-muted">
+              Phase {item.phase}
+            </span>
+            <div class="mt-4 flex items-center gap-3">
+              <span
+                class:list={[
+                  "block h-4 w-4 rounded-full",
+                  accentClasses[item.accent],
+                ]}
+              />
+              <span class="text-sm font-black uppercase tracking-[0.16em] text-muted">
+                {statusLabels[item.status]}
+              </span>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-4xl font-black leading-none tracking-tight text-ink">
+              {item.title}
+            </h2>
+            <p class="mt-5 text-lg leading-8 text-muted">{item.description}</p>
+            <p class="mt-5 leading-8 text-muted">{item.summary}</p>
+            <div class="mt-7 grid gap-3">
+              {item.outcomes.map((outcome) => (
+                <div class="flex gap-3 rounded-lg border border-line bg-paper p-4">
+                  <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-ember" />
+                  <span class="leading-7 text-muted">{outcome}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
