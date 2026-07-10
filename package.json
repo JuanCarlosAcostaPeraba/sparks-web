@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "graph:index": "codebase-memory-mcp cli index_repository --repo-path . --mode full"
   },
   "packageManager": "pnpm@11.10.0",
   "dependencies": {

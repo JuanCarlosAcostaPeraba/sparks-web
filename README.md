@@ -21,6 +21,24 @@ npm run dev
 npm run build
 ```
 
+## Codebase knowledge graph
+
+The project is configured for [codebase-memory-mcp](https://github.com/DeusData/codebase-memory-mcp), which gives compatible coding agents structural search, call tracing, architecture summaries, and impact analysis without uploading source code.
+
+Install it once on macOS or Linux:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh | bash
+```
+
+Restart the coding agent after installation, then build or refresh this repository's graph with:
+
+```bash
+pnpm graph:index
+```
+
+Agent-specific discovery guidance lives in `AGENTS.md`. Generated graph databases remain in the tool's local cache and are not part of the application build.
+
 ## Project Structure
 
 ```text

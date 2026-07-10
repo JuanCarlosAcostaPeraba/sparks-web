@@ -8,6 +8,20 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
+## Codebase intelligence
+
+This project uses `codebase-memory-mcp` to maintain a local knowledge graph of the codebase.
+
+Prefer its graph tools for code discovery, in this order:
+
+1. `search_graph` to find functions, classes, routes, and variables.
+2. `trace_path` to inspect callers, callees, and data flow.
+3. `get_code_snippet` to read a specific symbol.
+4. `query_graph` for complex multi-hop queries.
+5. `get_architecture` for a high-level project overview.
+
+Run `index_repository` first when the project is not indexed. Fall back to text or file search for string literals, configuration, non-code files, or when the graph has insufficient coverage.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build
