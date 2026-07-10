@@ -22,6 +22,12 @@ Prefer its graph tools for code discovery, in this order:
 
 Run `index_repository` first when the project is not indexed. Fall back to text or file search for string literals, configuration, non-code files, or when the graph has insufficient coverage.
 
+## Code review
+
+Do not request GitHub Copilot code reviews for this repository. Reviews are done locally to avoid burning Copilot quota.
+
+Use the local `local-code-review` Codex skill before opening or merging pull requests. The skill is installed at `C:\Users\japeraba\.codex\skills\local-code-review` and includes `scripts\collect_review_context.py` for gathering review context from local git state.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build
