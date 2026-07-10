@@ -1,0 +1,20 @@
+---
+import type { SectionIntro } from "../types/site";
+
+interface Props {
+  intro: SectionIntro;
+}
+
+const { intro } = Astro.props;
+---
+
+<div class="grid gap-10 md:grid-cols-[0.95fr_1.05fr] md:items-end">
+  <h2
+    class="max-w-xl text-5xl font-black leading-none tracking-tight text-ink md:text-6xl"
+  >
+    {intro.title}
+  </h2>
+  <p class="max-w-xl wrap-break-word text-lg leading-8 text-muted">
+    {intro.description}
+  </p>
+</div>

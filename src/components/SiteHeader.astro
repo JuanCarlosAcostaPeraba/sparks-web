@@ -1,0 +1,34 @@
+---
+import BrandMark from "./BrandMark.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+import type { NavItem } from "../types/site";
+
+interface Props {
+  navItems: readonly NavItem[];
+}
+
+const { navItems } = Astro.props;
+---
+
+<header
+  class="sticky top-0 z-20 border-b border-line/80 bg-paper/90 backdrop-blur-xl"
+>
+  <nav
+    class="mx-auto flex h-18 w-full max-w-6xl items-center justify-between px-5"
+    aria-label="Primary"
+  >
+    <BrandMark />
+    <div class="flex items-center gap-5 md:gap-8">
+      <div class="hidden items-center gap-8 text-sm font-bold text-muted md:flex">
+        {
+          navItems.map((item) => (
+            <a class="hover:text-ink" href={item.href}>
+              {item.label}
+            </a>
+          ))
+        }
+      </div>
+      <ThemeToggle />
+    </div>
+  </nav>
+</header>

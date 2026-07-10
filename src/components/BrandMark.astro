@@ -1,0 +1,17 @@
+---
+interface Props {
+  href?: string;
+}
+
+const { href = "#" } = Astro.props;
+---
+
+<a class="flex items-center gap-3 font-black text-xl tracking-tight" href={href}>
+  <span
+    class="grid h-8 w-8 place-items-center bg-ink font-mono text-spark"
+    aria-hidden="true"
+  >
+    ✦
+  </span>
+  <span>sparks</span>
+</a>
