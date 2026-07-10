@@ -17,18 +17,90 @@ const { navItems } = Astro.props;
     class="mx-auto flex h-18 w-full max-w-6xl items-center justify-between px-5"
     aria-label="Primary"
   >
-    <BrandMark />
+    <BrandMark href="/" />
     <div class="flex items-center gap-5 md:gap-8">
       <div class="hidden items-center gap-8 text-sm font-bold text-muted md:flex">
         {
-          navItems.map((item) => (
-            <a class="hover:text-ink" href={item.href}>
-              {item.label}
-            </a>
-          ))
+          navItems.map((item) => {
+            const isSectionLink = item.href.startsWith("#");
+            const target = isSectionLink ? item.href.slice(1) : undefined;
+
+            return (
+              <a
+                class="hover:text-ink"
+                href={isSectionLink ? "/" : item.href}
+                data-scroll-target={target}
+              >
+                {item.label}
+              </a>
+            );
+          })
         }
       </div>
       <ThemeToggle />
     </div>
   </nav>
 </header>
+
+<script>
+  const prefersReducedMotion = () =>
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const scrollToTarget = (target: string) => {
+    const element = target === "top" ? document.body : document.getElementById(target);
+
+    if (!element) {
+      return false;
+    }
+
+    element.scrollIntoView({
+      behavior: prefersReducedMotion() ? "auto" : "smooth",
+      block: "start",
+    });
+    window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    return true;
+  };
+
+  const pendingTarget = sessionStorage.getItem("sparks-scroll-target");
+  if (pendingTarget) {
+    sessionStorage.removeItem("sparks-scroll-target");
+    requestAnimationFrame(() => scrollToTarget(pendingTarget));
+  } else if (window.location.pathname === "/" && window.location.hash) {
+    const hashTarget = window.location.hash.slice(1);
+    requestAnimationFrame(() => scrollToTarget(hashTarget));
+  }
+
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+
+    if (!(target instanceof Element)) {
+      return;
+    }
+
+    const brandLink = target.closest<HTMLAnchorElement>("[data-brand-link]");
+    if (brandLink) {
+      if (window.location.pathname === "/") {
+        event.preventDefault();
+        scrollToTarget("top");
+      }
+      return;
+    }
+
+    const link = target.closest<HTMLAnchorElement>("[data-scroll-target]");
+    const scrollTarget = link?.dataset.scrollTarget;
+
+    if (!link || !scrollTarget) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (window.location.pathname === "/") {
+      scrollToTarget(scrollTarget);
+      return;
+    }
+
+    sessionStorage.setItem("sparks-scroll-target", scrollTarget);
+    window.location.assign("/");
+  });
+</script>

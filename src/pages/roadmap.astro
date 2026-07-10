@@ -9,12 +9,7 @@ import { roadmapPageContent } from "../data/roadmap";
 
 const roadmapNavItems = navItems.map((item) => ({
   ...item,
-  href:
-    item.label === "Roadmap"
-      ? "/roadmap"
-      : item.href.startsWith("#")
-        ? `/${item.href}`
-        : item.href,
+  href: item.label === "Roadmap" ? "/roadmap" : item.href,
 }));
 ---
 

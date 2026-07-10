@@ -6,7 +6,11 @@ interface Props {
 const { href = "/" } = Astro.props;
 ---
 
-<a class="flex items-center gap-3 font-black text-xl tracking-tight" href={href}>
+<a
+  class="flex items-center gap-3 font-black text-xl tracking-tight"
+  href={href}
+  data-brand-link
+>
   <span
     class="grid h-8 w-8 place-items-center bg-[#15130f] text-[#64d67a]"
     aria-hidden="true"
