@@ -8,10 +8,14 @@ const { href = "#" } = Astro.props;
 
 <a class="flex items-center gap-3 font-black text-xl tracking-tight" href={href}>
   <span
-    class="grid h-8 w-8 place-items-center bg-ink font-mono text-spark"
+    class="grid h-8 w-8 place-items-center bg-[#15130f] text-[#64d67a]"
     aria-hidden="true"
   >
-    ✦
+    <svg class="h-5 w-5" viewBox="0 0 64 64" fill="currentColor">
+      <path
+        d="M32 14l3.7 10.3L46 28l-10.3 3.7L32 42l-3.7-10.3L18 28l10.3-3.7L32 14z"
+      ></path>
+    </svg>
   </span>
   <span>sparks</span>
 </a>
