@@ -1,25 +1,18 @@
 ---
+import { Image } from 'astro:assets'
+
 interface Props {
-  href?: string;
+	href?: string
 }
 
-const { href = "/" } = Astro.props;
+const { href = '/' } = Astro.props
 ---
 
 <a
-  class="flex items-center gap-3 font-black text-xl tracking-tight"
-  href={href}bg-ink
-  data-brand-link
->
-  <span
-    class="grid h-8 w-8 place-items-center bg-ink text-spark"
-    aria-hidden="true"
-  >
-    <svg class="h-5 w-5" viewBox="0 0 64 64" fill="currentColor">
-      <path
-        d="M32 14l3.7 10.3L46 28l-10.3 3.7L32 42l-3.7-10.3L18 28l10.3-3.7L32 14z"
-      ></path>
-    </svg>
-  </span>
-  <span>sparks</span>
+	class="flex items-center gap-3 font-black text-xl tracking-tight"
+	href={href}
+	bg-ink
+	data-brand-link>
+	<Image src="/favicon.svg" alt="Brand mark" width={32} height={32} />
+	<span>sparks</span>
 </a>
