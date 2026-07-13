@@ -32,6 +32,7 @@ export type RoadmapDetail = RoadmapStep & {
 };
 
 export type InstallOption = {
+  id: "unix" | "windows";
   title: string;
   description: string;
   commands: readonly string[];
@@ -41,8 +42,6 @@ export type HeroContent = {
   title: string;
   description: string;
   primaryAction: Link;
-  secondaryAction: Link;
-  installHint: string;
 };
 
 export type SectionIntro = {

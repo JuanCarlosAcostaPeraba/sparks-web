@@ -1,0 +1,93 @@
+---
+interface Props {
+  command: string;
+  label?: string;
+  multiline?: boolean;
+}
+
+const { command, label = "Copy", multiline = false } = Astro.props;
+---
+
+<div
+  class="group flex min-w-0 items-start gap-3 rounded-lg border border-neutral-800 bg-neutral-950 px-4 py-3 text-stone-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+>
+  <code
+    class:list={[
+      "min-w-0 flex-1 font-mono text-xs leading-6 sm:text-sm",
+      multiline ? "whitespace-pre overflow-x-auto" : "break-all",
+    ]}
+  >{command}</code>
+  <button
+    type="button"
+    class="inline-flex h-10 w-[5.75rem] shrink-0 items-center justify-center gap-2 rounded-md border border-neutral-700 bg-neutral-900 px-2 text-xs font-bold text-stone-200 transition-[border-color,color,transform] duration-150 hover:border-neutral-500 hover:text-white active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spark motion-reduce:transition-none"
+    data-copy-button
+    data-command={command}
+    aria-label={`${label} install command`}
+  >
+    <svg aria-hidden="true" viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-none stroke-current" stroke-width="1.7">
+      <rect x="6.5" y="6.5" width="9" height="9" rx="1.5"></rect>
+      <path d="M4 13.5H3.5A1.5 1.5 0 0 1 2 12V3.5A1.5 1.5 0 0 1 3.5 2H12a1.5 1.5 0 0 1 1.5 1.5V4"></path>
+    </svg>
+    <span class="inline-block w-[3.25rem] text-left" data-copy-label>{label}</span>
+  </button>
+</div>
+
+<script>
+  import { slotText, type SlotTextController } from "slot-text";
+  import "slot-text/style.css";
+
+  const labels = new WeakMap<HTMLElement, SlotTextController>();
+
+  const getLabelController = (element: HTMLElement) => {
+    const existing = labels.get(element);
+    if (existing) return existing;
+
+    const initialText = element.textContent?.trim() || "Copy";
+    const controller = slotText(element, initialText, { duration: 180 });
+    labels.set(element, controller);
+    return controller;
+  };
+
+  document
+    .querySelectorAll<HTMLElement>("[data-copy-label]")
+    .forEach(getLabelController);
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.append(textarea);
+      textarea.select();
+      const copied = document.execCommand("copy");
+      textarea.remove();
+      if (!copied) throw new Error("Clipboard unavailable");
+    }
+  };
+
+  document.addEventListener("click", async (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+
+    const button = target.closest<HTMLButtonElement>("[data-copy-button]");
+    const command = button?.dataset.command;
+    const label = button?.querySelector<HTMLElement>("[data-copy-label]");
+    if (!button || !command || !label) return;
+
+    try {
+      await copyToClipboard(command);
+      getLabelController(label).flash("Copied", { revertAfter: 1800 });
+      button.setAttribute("aria-label", "Install command copied");
+      window.setTimeout(() => {
+        button.setAttribute("aria-label", "Copy install command");
+      }, 1800);
+    } catch {
+      getLabelController(label).flash("Select", { revertAfter: 1800 });
+    }
+  });
+</script>

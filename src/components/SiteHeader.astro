@@ -23,6 +23,7 @@ const { navItems } = Astro.props;
         {
           navItems.map((item) => {
             const isSectionLink = item.href.startsWith("#");
+            const isExternal = /^https?:\/\//.test(item.href);
             const target = isSectionLink ? item.href.slice(1) : undefined;
 
             return (
@@ -30,6 +31,8 @@ const { navItems } = Astro.props;
                 class="hover:text-ink"
                 href={isSectionLink ? "/" : item.href}
                 data-scroll-target={target}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
               >
                 {item.label}
               </a>

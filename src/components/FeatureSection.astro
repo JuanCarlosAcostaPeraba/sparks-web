@@ -17,12 +17,13 @@ const { intro, features } = Astro.props;
       class="mt-12 grid overflow-hidden rounded-lg border border-line bg-panel md:grid-cols-3"
     >
       {
-        features.map((feature) => (
-          <article class="border-b border-line p-7 last:border-b-0 md:border-r md:border-b-0 md:last:border-r-0">
-            <h3 class="text-2xl font-black leading-tight text-ink">
+        features.map((feature, index) => (
+          <article class="group border-b border-line p-7 last:border-b-0 md:border-r md:border-b-0 md:last:border-r-0">
+            <span class="font-mono text-xs font-black text-ember" aria-hidden="true">0{index + 1}</span>
+            <h3 class="mt-5 text-balance text-2xl font-black leading-tight text-ink">
               {feature.title}
             </h3>
-            <p class="mt-4 wrap-break-word leading-7 text-muted">{feature.text}</p>
+            <p class="mt-4 wrap-break-word text-pretty leading-7 text-muted">{feature.text}</p>
           </article>
         ))
       }

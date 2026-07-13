@@ -11,8 +11,14 @@ const { href = '/' } = Astro.props
 <a
 	class="flex items-center gap-3 font-black text-xl tracking-tight"
 	href={href}
-	bg-ink
 	data-brand-link>
-	<Image src="/favicon.svg" alt="Brand mark" width={32} height={32} />
+	<Image
+		src="/favicon.svg"
+		alt="Brand mark"
+		width={32}
+		height={32}
+		loading="eager"
+		fetchpriority="high"
+	/>
 	<span>sparks</span>
 </a>

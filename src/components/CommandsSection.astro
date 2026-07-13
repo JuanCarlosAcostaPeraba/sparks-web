@@ -18,20 +18,20 @@ const { intro, commands } = Astro.props;
   >
     <div>
       <h2
-        class="max-w-xl text-5xl font-black leading-none tracking-tight text-ink md:text-6xl"
+        class="max-w-xl text-balance text-5xl font-black leading-none tracking-tight text-ink md:text-6xl"
       >
         {intro.title}
       </h2>
-      <p class="mt-7 max-w-xl text-lg leading-8 text-muted">
+      <p class="mt-7 max-w-xl text-pretty text-lg leading-8 text-muted">
         {intro.description}
       </p>
     </div>
     <div>
       {
         commands.map((example) => (
-          <div class="grid gap-2 border-b border-line py-4 sm:grid-cols-[220px_1fr] sm:gap-6">
+          <div class="group grid gap-2 border-b border-line py-4 sm:grid-cols-[220px_1fr] sm:gap-6">
             <code class="font-mono text-sm font-black text-ember">
-              {example.command}
+              <span class="mr-2 text-spark" aria-hidden="true">$</span>{example.command}
             </code>
             <span class="text-muted">{example.description}</span>
           </div>

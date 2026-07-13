@@ -1,13 +1,15 @@
 ---
 import TerminalDemo from "./TerminalDemo.astro";
-import type { HeroContent } from "../types/site";
+import PlatformInstall from "./PlatformInstall.astro";
+import type { HeroContent, InstallOption } from "../types/site";
 
 interface Props {
   content: HeroContent;
   terminalLines: readonly string[];
+  installOptions: readonly InstallOption[];
 }
 
-const { content, terminalLines } = Astro.props;
+const { content, terminalLines, installOptions } = Astro.props;
 ---
 
 <section
@@ -15,33 +17,30 @@ const { content, terminalLines } = Astro.props;
 >
   <div class="w-full max-w-[320px] min-w-0 sm:max-w-none">
     <h1
-      class="max-w-2xl text-7xl font-black leading-[0.88] tracking-tight text-ink sm:text-8xl lg:text-[7rem]"
+      class="max-w-2xl text-balance text-7xl font-black leading-[0.88] tracking-tight text-ink sm:text-8xl lg:text-[7rem]"
     >
       {content.title}
     </h1>
     <p
-      class="mt-7 max-w-[320px] wrap-break-word text-xl leading-8 text-muted sm:max-w-2xl sm:text-2xl"
+      class="mt-7 max-w-[320px] wrap-break-word text-pretty text-xl leading-8 text-muted sm:max-w-2xl sm:text-2xl"
     >
       {content.description}
     </p>
     <div class="mt-9 flex flex-wrap gap-3">
       <a
-        class="inline-flex h-11 items-center justify-center rounded-lg border border-ink bg-ink px-5 text-sm font-black text-panel"
+        class="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-ink bg-ink px-5 text-sm font-black text-panel transition-transform duration-150 hover:-translate-y-0.5 active:scale-[0.96] motion-reduce:transition-none"
         href={content.primaryAction.href}
+        target="_blank"
+        rel="noopener noreferrer"
       >
+        <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 fill-current">
+          <path d="M12 .7A11.5 11.5 0 0 0 8.36 23.1c.58.1.79-.25.79-.56v-2.02c-3.22.7-3.9-1.37-3.9-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.2 1.78 1.2 1.04 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.74-1.55-2.57-.3-5.27-1.28-5.27-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.16 1.18a10.9 10.9 0 0 1 5.76 0c2.2-1.49 3.16-1.18 3.16-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.83 1.19 3.09 0 4.42-2.71 5.39-5.29 5.68.42.36.79 1.06.79 2.14v3.05c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .7Z" />
+        </svg>
         {content.primaryAction.label}
       </a>
-      <a
-        class="inline-flex h-11 items-center justify-center rounded-lg border border-ink px-5 text-sm font-black text-ink"
-        href={content.secondaryAction.href}
-      >
-        {content.secondaryAction.label}
-      </a>
     </div>
-    <div
-      class="mt-4 w-full max-w-[320px] overflow-hidden break-all rounded-lg border border-line bg-panel px-4 py-3 font-mono text-xs text-muted sm:max-w-full sm:text-sm"
-    >
-      {content.installHint}
+    <div class="mt-4 w-full max-w-[320px] sm:max-w-full">
+      <PlatformInstall options={installOptions} compact />
     </div>
   </div>
 

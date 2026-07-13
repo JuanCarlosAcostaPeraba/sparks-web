@@ -23,7 +23,7 @@ const statusLabels = {
 <div class="grid gap-4 md:grid-cols-3">
   {
     steps.map((step, index) => (
-      <article class="relative rounded-lg border border-line bg-panel p-6">
+      <article class="relative rounded-lg border border-line bg-panel p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
         {index < steps.length - 1 && (
           <div class="absolute top-10 right-0 hidden h-px w-8 translate-x-full bg-line md:block" />
         )}
@@ -40,10 +40,10 @@ const statusLabels = {
             {statusLabels[step.status]}
           </span>
         </div>
-        <h3 class="mt-6 text-2xl font-black leading-tight text-ink">
+        <h3 class="mt-6 text-balance text-2xl font-black leading-tight text-ink">
           {step.title}
         </h3>
-        <p class="mt-4 leading-7 text-muted">{step.description}</p>
+        <p class="mt-4 text-pretty leading-7 text-muted">{step.description}</p>
       </article>
     ))
   }

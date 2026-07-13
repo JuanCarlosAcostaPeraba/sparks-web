@@ -10,8 +10,10 @@ import type {
 } from "../types/site";
 
 const githubUrl = "https://github.com/JuanCarlosAcostaPeraba/sparks-cli";
-const releaseUrl = `${githubUrl}/releases/tag/v0.1.0`;
-const downloadBaseUrl = `${githubUrl}/releases/download/v0.1.0`;
+const unixInstallCommand =
+  "curl -fsSL https://raw.githubusercontent.com/JuanCarlosAcostaPeraba/sparks-cli/main/scripts/install.sh | sh";
+const windowsInstallCommand =
+  "irm https://raw.githubusercontent.com/JuanCarlosAcostaPeraba/sparks-cli/main/scripts/install.ps1 | iex";
 
 export const navItems: readonly NavItem[] = [
   { label: "Why", href: "#why" },
@@ -24,16 +26,11 @@ export const navItems: readonly NavItem[] = [
 export const heroContent: HeroContent = {
   title: "sparks",
   description:
-    "A tiny native CLI for capturing ideas, tasks, and nested thoughts without leaving the terminal.",
+    "Catch the thought before it disappears. A fast, local-first CLI for ideas, tasks and nested thoughts",
   primaryAction: {
-    label: "Download v0.1.0",
-    href: releaseUrl,
-  },
-  secondaryAction: {
-    label: "View on GitHub",
+    label: "Star on GitHub",
     href: githubUrl,
   },
-  installHint: "curl -L .../sparks_0.1.0_darwin_arm64.tar.gz",
 };
 
 export const terminalLines = [
@@ -42,8 +39,8 @@ export const terminalLines = [
   '<span class="text-spark">$</span> sparks add --parent 1 "Write docs"',
   "Added spark 2",
   '<span class="text-spark">$</span> sparks tree',
-  "└─ □ 1) Ship the CLI",
-  "   └─ □ 1.1) Write docs",
+  "└─ [!] 1) Ship the CLI",
+  "   └─ [ ] 1.1) Write docs",
   "",
   '<span class="text-stone-400"># fast capture, local SQLite, JSON when needed</span>',
 ] as const;
@@ -136,39 +133,31 @@ export const roadmapSteps: readonly RoadmapStep[] = [
 ];
 
 export const installIntro: SectionIntro = {
-  title: "Install manually today",
+  title: "One command. Then stay in flow",
   description:
-    "Homebrew/core submission is planned when the project meets upstream notability requirements. Until then, use the release archive for your platform.",
+    "The official installers detect your platform, verify the download checksum, and put sparks on your PATH.",
 };
 
 export const installOptions: readonly InstallOption[] = [
   {
-    title: "Apple Silicon macOS",
+    id: "unix",
+    title: "macOS and Linux",
     description:
-      "Download, extract, and place the binary somewhere on your PATH.",
-    commands: [
-      `curl -L -o sparks.tar.gz ${downloadBaseUrl}/sparks_0.1.0_darwin_arm64.tar.gz`,
-      "tar -xzf sparks.tar.gz",
-      "mkdir -p ~/.local/bin",
-      "mv sparks ~/.local/bin/sparks",
-    ],
+      "Install the latest release for your operating system and architecture.",
+    commands: [unixInstallCommand],
   },
   {
-    title: "Intel macOS",
-    description: "Use the same install flow with the amd64 archive.",
-    commands: [
-      `curl -L -o sparks.tar.gz ${downloadBaseUrl}/sparks_0.1.0_darwin_amd64.tar.gz`,
-      "tar -xzf sparks.tar.gz",
-      "mkdir -p ~/.local/bin",
-      "mv sparks ~/.local/bin/sparks",
-    ],
+    id: "windows",
+    title: "Windows",
+    description: "Run the checksum-verifying installer from PowerShell.",
+    commands: [windowsInstallCommand],
   },
 ];
 
 export const footerContent: FooterContent = {
   title: "Give your terminal a scratchpad",
   description:
-    "sparks is early. Try it, open issues, and help shape a tiny tool for fast capture.",
+    "Open it, capture the thought, and get back to the work that sparked it.",
   action: {
     label: "Star on GitHub",
     href: githubUrl,

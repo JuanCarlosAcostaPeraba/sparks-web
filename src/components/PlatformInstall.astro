@@ -1,0 +1,122 @@
+---
+import CopyCommand from "./CopyCommand.astro";
+import type { InstallOption } from "../types/site";
+
+interface Props {
+  options: readonly InstallOption[];
+  compact?: boolean;
+}
+
+const { options, compact = false } = Astro.props;
+---
+
+<div class="w-full" data-platform-install>
+  <div class="grid" data-platform-panels>
+    {
+      options.map((option) => (
+        <div
+          class="col-start-1 row-start-1"
+          id={`install-panel-${option.id}`}
+          role="tabpanel"
+          aria-labelledby={`install-tab-${option.id}`}
+          data-platform-panel={option.id}
+          hidden={option.id !== "unix"}
+        >
+          <CopyCommand command={option.commands.join("\n")} multiline={!compact} />
+        </div>
+      ))
+    }
+  </div>
+
+  <div
+    class="mt-3 flex w-full items-center gap-1 overflow-x-auto rounded-lg border border-line bg-panel p-1"
+    role="tablist"
+    aria-label="Installation platform"
+  >
+    <span class="ml-2 mr-1 shrink-0 font-mono text-xs font-bold text-ember" aria-hidden="true">&gt;_</span>
+    {
+      options.map((option) => (
+        <button
+          class="inline-flex h-10 shrink-0 items-center gap-2 rounded-md px-3 font-mono text-xs font-bold text-muted transition-[background-color,color,transform] duration-150 hover:text-ink aria-selected:bg-ink aria-selected:text-panel aria-selected:hover:text-panel active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spark motion-reduce:transition-none"
+          id={`install-tab-${option.id}`}
+          type="button"
+          role="tab"
+          aria-controls={`install-panel-${option.id}`}
+          aria-selected={option.id === "unix" ? "true" : "false"}
+          tabindex={option.id === "unix" ? 0 : -1}
+          data-platform-tab={option.id}
+        >
+          <span class="h-1.5 w-1.5 rounded-full bg-current opacity-60" aria-hidden="true"></span>
+          {option.title}
+        </button>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  type Platform = "unix" | "windows";
+
+  const selectPlatform = (root: HTMLElement, platform: Platform, focus = false) => {
+    root.querySelectorAll<HTMLButtonElement>("[data-platform-tab]").forEach((tab) => {
+      const isSelected = tab.dataset.platformTab === platform;
+      tab.setAttribute("aria-selected", String(isSelected));
+      tab.tabIndex = isSelected ? 0 : -1;
+      if (isSelected && focus) tab.focus();
+    });
+
+    root.querySelectorAll<HTMLElement>("[data-platform-panel]").forEach((panel) => {
+      panel.hidden = panel.dataset.platformPanel !== platform;
+    });
+  };
+
+  const detectPlatform = (): Platform => {
+    const navigatorWithHints = navigator as Navigator & {
+      userAgentData?: { platform?: string };
+    };
+    const platform = [
+      navigatorWithHints.userAgentData?.platform,
+      navigator.platform,
+      navigator.userAgent,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    return platform.includes("win") ? "windows" : "unix";
+  };
+
+  document.querySelectorAll<HTMLElement>("[data-platform-install]").forEach((root) => {
+    selectPlatform(root, detectPlatform());
+  });
+
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+
+    const tab = target.closest<HTMLButtonElement>("[data-platform-tab]");
+    const root = tab?.closest<HTMLElement>("[data-platform-install]");
+    const platform = tab?.dataset.platformTab as Platform | undefined;
+    if (root && platform) selectPlatform(root, platform);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLButtonElement) || !target.matches("[data-platform-tab]")) return;
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+
+    const root = target.closest<HTMLElement>("[data-platform-install]");
+    const tabs = root ? [...root.querySelectorAll<HTMLButtonElement>("[data-platform-tab]")] : [];
+    const currentIndex = tabs.indexOf(target);
+    if (!root || currentIndex < 0) return;
+
+    event.preventDefault();
+    const nextIndex = event.key === "Home"
+      ? 0
+      : event.key === "End"
+        ? tabs.length - 1
+        : (currentIndex + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+    const platform = tabs[nextIndex]?.dataset.platformTab as Platform | undefined;
+    if (platform) selectPlatform(root, platform, true);
+  });
+</script>
