@@ -1,28 +1,71 @@
 ---
 import '../styles/global.css'
+import { homeSeo, siteMetadata } from '../config/seo'
+
+interface Props {
+	title?: string
+	description?: string
+	canonicalPath?: string
+	imagePath?: string
+	imageAlt?: string
+	structuredData?: Record<string, unknown>
+	noindex?: boolean
+}
 
 const {
-	title = 'sparks - capture ideas without leaving the terminal',
-	description = 'sparks is a tiny native CLI for capturing ideas, tasks, and nested thoughts from the terminal.',
-} = Astro.props
+	title = homeSeo.title,
+	description = homeSeo.description,
+	canonicalPath = Astro.url.pathname,
+	imagePath = siteMetadata.imagePath,
+	imageAlt = siteMetadata.imageAlt,
+	structuredData,
+	noindex = false,
+} = Astro.props as Props
+
+const siteUrl = Astro.site ?? new URL(siteMetadata.url)
+const canonicalUrl = new URL(canonicalPath, siteUrl)
+const socialImageUrl = new URL(imagePath, siteUrl)
+const robotsContent = noindex
+	? 'noindex, nofollow'
+	: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={siteMetadata.language}>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="canonical" href={canonicalUrl} />
+		<link rel="author" href={siteMetadata.authorUrl} />
+		<link rel="sitemap" href="/sitemap-index.xml" type="application/xml" />
 		<meta name="description" content={description} />
+		<meta name="author" content={siteMetadata.authorName} />
+		<meta name="application-name" content={siteMetadata.name} />
+		<meta name="robots" content={robotsContent} />
+		<meta name="theme-color" content="#f7f6f1" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#11100e" media="(prefers-color-scheme: dark)" />
+		<meta property="og:site_name" content={siteMetadata.name} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:type" content="website" />
-		<meta property="og:image" content="/og.svg" />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:locale" content={siteMetadata.locale} />
+		<meta property="og:image" content={socialImageUrl} />
+		<meta property="og:image:secure_url" content={socialImageUrl} />
+		<meta property="og:image:type" content="image/png" />
+		<meta property="og:image:width" content={String(siteMetadata.imageWidth)} />
+		<meta property="og:image:height" content={String(siteMetadata.imageHeight)} />
+		<meta property="og:image:alt" content={imageAlt} />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content="/og.svg" />
+		<meta name="twitter:image" content={socialImageUrl} />
+		<meta name="twitter:image:alt" content={imageAlt} />
 		<meta name="generator" content={Astro.generator} />
+		{structuredData && (
+			<script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+		)}
 		<style is:inline>
 			html {
 				background: #f7f6f1;

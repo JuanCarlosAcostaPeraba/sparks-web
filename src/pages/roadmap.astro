@@ -4,6 +4,7 @@ import RoadmapVisual from "../components/RoadmapVisual.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import Layout from "../layouts/Layout.astro";
+import { roadmapSeo, roadmapStructuredData } from "../config/seo";
 import { footerContent, navItems } from "../data/home";
 import { roadmapPageContent } from "../data/roadmap";
 
@@ -13,7 +14,12 @@ const roadmapNavItems = navItems.map((item) => ({
 }));
 ---
 
-<Layout title="Roadmap - sparks">
+<Layout
+  title={roadmapSeo.title}
+  description={roadmapSeo.description}
+  canonicalPath={roadmapSeo.path}
+  structuredData={roadmapStructuredData}
+>
   <SiteHeader navItems={roadmapNavItems} />
   <main>
     <section class="mx-auto w-full max-w-6xl px-5 py-20 md:py-28">

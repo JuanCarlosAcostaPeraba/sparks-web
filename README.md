@@ -43,10 +43,21 @@ Agent-specific discovery guidance lives in `AGENTS.md`. Generated graph database
 
 ```text
 src/pages/index.astro      Main landing page
-src/layouts/Layout.astro   HTML shell and SEO metadata
+src/config/seo.ts          Canonical site metadata and structured data
+src/layouts/Layout.astro   HTML shell and route-level SEO output
 src/styles/global.css      Tailwind import and design tokens
-public/og.svg              Social preview image
+public/og.svg              Editable social preview source
+public/og.png              1200×630 social preview served to crawlers
 ```
+
+## SEO
+
+- The production origin is defined once in `src/config/seo.ts` and reused by Astro, canonical URLs, social metadata, JSON-LD, and the sitemap.
+- `src/pages/robots.txt.ts` advertises the generated `sitemap-index.xml` using the canonical production origin.
+- Home and roadmap routes provide unique titles, descriptions, canonical URLs, and structured data.
+- Regenerate `public/og.png` from `public/og.svg` with `pnpm og:generate` after changing the social card.
+
+When the production domain changes, update `siteMetadata.url`, then rebuild and resubmit the sitemap in the relevant webmaster tools.
 
 ## Links
 
