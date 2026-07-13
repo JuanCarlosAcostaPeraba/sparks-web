@@ -162,4 +162,8 @@ export const footerContent: FooterContent = {
     label: "Star on GitHub",
     href: githubUrl,
   },
+  credit: {
+    label: "Designed & built by Juan Carlos Acosta Perabá ↗",
+    href: "https://jcap.tech/",
+  },
 };

@@ -53,6 +53,7 @@ export type FooterContent = {
   title: string;
   description: string;
   action: Link;
+  credit: Link;
 };
 
 export type RoadmapPageContent = {
