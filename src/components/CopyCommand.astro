@@ -43,7 +43,13 @@ const { command, label = "Copy", multiline = false } = Astro.props;
     if (existing) return existing;
 
     const initialText = element.textContent?.trim() || "Copy";
-    const controller = slotText(element, initialText, { duration: 180 });
+    const controller = slotText(element, initialText, {
+      bounce: 0.35,
+      duration: 180,
+      exitOffset: 0,
+      skipUnchanged: false,
+      stagger: 12,
+    });
     labels.set(element, controller);
     return controller;
   };
