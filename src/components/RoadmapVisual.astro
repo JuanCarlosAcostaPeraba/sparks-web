@@ -7,12 +7,6 @@ interface Props {
 
 const { steps } = Astro.props;
 
-const accentClasses = {
-  spark: "border-[#64d67a] bg-[#64d67a] text-[#15130f]",
-  ember: "border-ember bg-ember text-[#15130f]",
-  ink: "border-ink bg-ink text-panel",
-} as const;
-
 const statusLabels = {
   now: "Now",
   next: "Next",
@@ -28,12 +22,7 @@ const statusLabels = {
           <div class="absolute top-10 right-0 hidden h-px w-8 translate-x-full bg-line md:block" />
         )}
         <div class="flex items-center justify-between gap-4">
-          <span
-            class:list={[
-              "grid h-12 w-12 place-items-center rounded-full border text-sm font-black",
-              accentClasses[step.accent],
-            ]}
-          >
+          <span class="grid h-12 w-12 place-items-center rounded-full border text-sm font-black border-ink bg-ink text-panel">
             {step.phase}
           </span>
           <span class="rounded-full border border-line px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-muted">
